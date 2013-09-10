@@ -35,8 +35,8 @@ class Bandwidth:
     def persist(self, connection):
         self.connection = connection
 
-        for (host, items) in sorted(self.hosts.items()):
-            for (date, bytes) in sorted(items.items()):
+        for (host, items) in self.hosts.items():
+            for (date, bytes) in items.items():
                 storeId = self.getStoreId(host)
                 cursor = self.connection.cursor()
 
