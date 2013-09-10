@@ -6,6 +6,7 @@ p = apachelog.parser(r"%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-
 bwsum = bandwidth.Bandwidth()
 
 for file in sys.argv[1:]:
+    print "Processing %s file" % file
     for line in open(file):
         try:
             data = p.parse(line.strip())

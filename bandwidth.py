@@ -35,6 +35,8 @@ class Bandwidth:
     def persist(self, connection):
         self.connection = connection
 
+        print "Persisting to database"
+
         for (host, items) in self.hosts.items():
             for (date, bytes) in items.items():
                 storeId = self.getStoreId(host)
@@ -46,9 +48,9 @@ class Bandwidth:
                 cursor = self.connection.cursor()
 
                 if row is None:
-                    print cursor.execute("INSERT INTO log (store_id, date, bytes) VALUES (%d, '%s', %d)" % (storeId, date, bytes))
+                    cursor.execute("INSERT INTO log (store_id, date, bytes) VALUES (%d, '%s', %d)" % (storeId, date, bytes))
                 else:
-                    print cursor.execute("UPDATE log SET bytes = bytes + %d WHERE store_id = %d AND date = '%s'" % (bytes, storeId, date))
+                    cursor.execute("UPDATE log SET bytes = bytes + %d WHERE store_id = %d AND date = '%s'" % (bytes, storeId, date))
 
         self.connection.commit()
         self.connection.close()
